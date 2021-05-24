@@ -14,7 +14,7 @@
 
 static int	ft_tracer(const char *s1, const char *s2, size_t i, size_t len)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (s2[j] != '\0' && i < len)
@@ -36,7 +36,7 @@ static int	ft_tracer(const char *s1, const char *s2, size_t i, size_t len)
 	return (0);
 }
 
-char		*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 	int		j;

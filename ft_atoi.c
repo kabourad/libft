@@ -12,12 +12,12 @@
 
 #include "libft.h"
 
-static char		*ft_space(const char *str)
+static char	*ft_space(const char *str)
 {
 	while ((*str) != '\0')
 	{
-		if ((*str) == '\t' || (*str) == '\n' || (*str) == '\v' ||
-		(*str) == '\f' || (*str) == '\r' || (*str) == ' ')
+		if ((*str) == '\t' || (*str) == '\n' || (*str) == '\v'
+			|| (*str) == '\f' || (*str) == '\r' || (*str) == ' ')
 			str++;
 		else
 			return ((char *)str);
@@ -25,7 +25,7 @@ static char		*ft_space(const char *str)
 	return ((char *)str);
 }
 
-int				ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	long long	res;
 	long long	neg;
@@ -42,8 +42,10 @@ int				ft_atoi(const char *str)
 	}
 	while (((*str) >= '0' && (*str) <= '9') && (*str) != '\0')
 	{
-		if (res * 10 + (*str - '0') < res)
-			return (neg == -1 ? 0 : -1);
+		if ((res * 10 + (*str - '0') < res) && neg == -1)
+			return (0);
+		else if (res * 10 + (*str - '0') < res)
+			return (-1);
 		res = res * 10 + *str - '0';
 		str++;
 	}

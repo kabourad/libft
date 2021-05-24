@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-static int		numblen(int n)
+static int	numblen(int n)
 {
-	int b;
+	int	b;
 
 	b = 0;
 	if (n <= 0)
@@ -27,7 +27,7 @@ static int		numblen(int n)
 	return (b);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*allocator;
 	int		len;
@@ -37,13 +37,17 @@ char			*ft_itoa(int n)
 	len = numblen(n);
 	i = len - 1;
 	start = 0;
-	if (!(allocator = (char *)malloc(sizeof(char) * (len + 1))))
+	allocator = (char *)malloc(sizeof(char) * (len + 1));
+	if (!allocator)
 		return (NULL);
 	if (n < 0)
 		allocator[start++] = '-';
 	while (i >= start)
 	{
-		allocator[i] = ((n % 10) >= 0 ? (n % 10) : -(n % 10)) + '0';
+		if ((n % 10) >= 0)
+			allocator[i] = (n % 10) + '0';
+		else
+			allocator[i] = -(n % 10) + '0';
 		n /= 10;
 		i--;
 	}

@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-static int		word_count(char const *s, char c)
+static int	word_count(char const *s, char c)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	ret = 0;
 	i = 0;
@@ -32,12 +32,13 @@ static int		word_count(char const *s, char c)
 	return (ret);
 }
 
-static char		*get_str(char const *s, int i, int j)
+static char	*get_str(char const *s, int i, int j)
 {
 	int		k;
 	char	*ret;
 
-	if (!(ret = (char *)malloc(sizeof(char) * (j - i + 1))))
+	ret = (char *)malloc(sizeof(char) * (j - i + 1));
+	if (!ret)
 		return (NULL);
 	k = 0;
 	while (i < j)
@@ -46,7 +47,7 @@ static char		*get_str(char const *s, int i, int j)
 	return (ret);
 }
 
-static void		leakprotector(char **tab, int len)
+static void	leakprotector(char **tab, int len)
 {
 	int	i;
 
@@ -59,26 +60,33 @@ static void		leakprotector(char **tab, int len)
 	free(tab);
 }
 
-char			**ft_split(char const *s, char c)
+static int	skip_to_i(char const *s, char c, int i)
+{
+	while (s[i] == c && s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		j;
 	int		in;
 	char	**ret;
 
-	if (!s || !(ret = (char **)ft_calloc((word_count(s, c) + 1),
-	sizeof(char *))))
+	ret = (char **)ft_calloc((word_count(s, c) + 1), sizeof(char *));
+	if (!s || !ret)
 		return (NULL);
 	i = 0;
 	in = 0;
 	while (s[i])
 	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
+		i = skip_to_i(s, c, i);
 		j = i;
 		while (s[i] && s[j] != c && s[j] != '\0')
 			j++;
-		if (s[i] && !(ret[in++] = get_str(s, i, j)))
+		ret[in++] = get_str(s, i, j);
+		if (s[i] && !ret)
 		{
 			leakprotector(ret, in);
 			return (NULL);

@@ -14,13 +14,16 @@
 
 static size_t	ft_mini(size_t a, size_t b)
 {
-	return (a < b ? a : b);
+	if (a < b)
+		return (a);
+	else
+		return (b);
 }
 
-size_t			ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t i;
-	size_t v;
+	size_t	i;
+	size_t	v;
 
 	i = 0;
 	v = ft_strlen(dst);
